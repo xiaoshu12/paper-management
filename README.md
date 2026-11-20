@@ -1,13 +1,18 @@
-# paper-management
+# 论文管理
 
-公开的论文分析与 HTML 阅读页面。
+公开网站：https://xiaoshu12.github.io/paper-management/
 
-## 发布新文章
+## 添加论文分析
 
-1. 将每篇分析保存为独立的 HTML 文件，例如 `papers/example.html`。
-2. 在 `index.html` 的“文章目录”中添加指向该文件的链接。
-3. 提交到 `main` 分支。GitHub Pages 发布完成后，文章即可通过网站访问。
+1. 将每篇论文分析保存为独立的 HTML 文件，放在 papers/ 目录，例如 papers/example.html。
+2. 在 papers.json 中添加一条目录记录：
 
-网站首页：https://xiaoshu12.github.io/paper-management/
+   {"id":"example","title":"论文标题","year":"2026","file":"papers/example.html"}
 
-目前首页是占位页，尚未收录论文分析。
+3. 提交到 main 分支。GitHub Pages 会自动重新发布。论文会出现在左侧导航中，点击后在网站内阅读。
+
+id 使用小写英文字母、数字和连字符，且每篇论文不重复。title、year 和 file 可以按实际内容修改。
+
+## Notes
+
+Notes 仅保存在当前浏览器的本地存储中，不会上传到 GitHub，也不会让网站访客看到。支持新增、编辑、删除，以及通过 JSON 文件导出和导入备份。换设备或清除浏览器数据前，请先导出备份。
