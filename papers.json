@@ -16,5 +16,11 @@
     "title": "智能外语辅导系统的有效反馈策略实验",
     "year": "2006",
     "file": "papers/ferreira-2006-effective-feedback-its.json"
+  },
+  {
+    "id": "maniktala-chi-barnes-2023-hnu",
+    "title": "自适应解题帮助的学生产出模型（HNU）",
+    "year": "2023",
+    "file": "papers/maniktala-chi-barnes-2023-hnu.json"
   }
 ]
