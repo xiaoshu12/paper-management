@@ -62,8 +62,11 @@
     .paper-link { min-height: 40px; font-size: 13px; }
     .paper-title { overflow: hidden; text-overflow: ellipsis; }
     .paper-item + .paper-item { margin-top: 4px; }
-    .chapter-list { margin: 8px 0 14px 13px; padding-left: 11px; border-left: 1px solid #e1e6f1; }
-    .chapter-heading { padding: 5px 10px 8px; color: #9aa4b3; font-size: 11px; font-weight: 700; letter-spacing: .06em; }
+    .chapter-list { margin: 7px 0 14px 13px; padding-left: 11px; border-left: 1px solid #e1e6f1; }
+    .chapter-toggle { display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 7px 10px; border: 0; border-radius: 8px; background: transparent; color: #69758d; font-size: 12px; font-weight: 700; text-align: left; }
+    .chapter-toggle:hover { background: #f3f5fb; color: #414fc4; }
+    .chapter-chevron { display: inline-block; font-size: 15px; line-height: 1; transition: transform .2s ease; }
+    .chapter-toggle[aria-expanded="true"] .chapter-chevron { transform: rotate(90deg); }
     .chapter-link { display: flex; gap: 8px; width: 100%; padding: 8px 10px; border: 0; border-radius: 8px; background: transparent; color: #68758b; text-align: left; font-size: 12px; line-height: 1.4; }
     .chapter-link:hover { background: #f3f5fb; color: #4150b9; }
     .chapter-link.active { background: #f0f2fc; color: #414fc4; font-weight: 650; }
@@ -114,7 +117,7 @@
     .note-actions { display: flex; gap: 13px; }
     .text-button { border: 0; background: transparent; padding: 2px 0; color: #4c5bd4; font-size: 13px; font-weight: 650; }
     .text-button.danger { color: #bd4251; }
-    #paperView { max-width: 820px; margin-inline: auto; }
+    #paperView { max-width: 1040px; margin-inline: auto; }
     .paper-header { border-bottom: 1px solid #e5e9f1; padding-bottom: 32px; }
     .paper-header h1 { max-width: 850px; margin-bottom: 18px; }
     .paper-subtitle { max-width: 790px; color: #58657a; line-height: 1.6; font-size: 17px; }
@@ -418,6 +421,27 @@
           chapters.dataset.paperId = paper.id;
           chapters.setAttribute("aria-label", paper.title + "的章节");
           chapters.hidden = true;
+          var chapterToggle = document.createElement("button");
+          chapterToggle.type = "button";
+          chapterToggle.className = "chapter-toggle";
+          chapterToggle.setAttribute("aria-expanded", "false");
+          chapterToggle.setAttribute("aria-controls", "chapters-" + paper.id);
+          var chapterTitle = document.createElement("span");
+          chapterTitle.textContent = "本篇目录";
+          var chevron = document.createElement("span");
+          chevron.className = "chapter-chevron";
+          chevron.setAttribute("aria-hidden", "true");
+          chevron.textContent = "▸";
+          chapterToggle.append(chapterTitle, chevron);
+          var chapterLinks = document.createElement("div");
+          chapterLinks.className = "chapter-links";
+          chapterLinks.id = "chapters-" + paper.id;
+          chapterLinks.hidden = true;
+          chapterToggle.addEventListener("click", function () {
+            chapterLinks.hidden = !chapterLinks.hidden;
+            chapterToggle.setAttribute("aria-expanded", String(!chapterLinks.hidden));
+          });
+          chapters.append(chapterToggle, chapterLinks);
           item.appendChild(chapters);
           list.appendChild(item);
           var card = document.createElement("div");
@@ -502,11 +526,9 @@
           var chapterList = Array.from(document.querySelectorAll(".chapter-list")).find(function (list) {
             return list.dataset.paperId === paper.id;
           });
-          chapterList.replaceChildren();
-          var chapterHeading = document.createElement("div");
-          chapterHeading.className = "chapter-heading";
-          chapterHeading.textContent = "本篇目录";
-          chapterList.appendChild(chapterHeading);
+          var chapterLinks = chapterList.querySelector(".chapter-links");
+          chapterLinks.replaceChildren();
+          chapterList.querySelector(".chapter-toggle span").textContent = "本篇目录 · " + data.sections.length + " 节";
           data.sections.forEach(function (section) {
             if (!/^[a-z0-9-]+$/.test(section.id) || typeof section.html !== "string") return;
             var link = document.createElement("button");
@@ -514,7 +536,7 @@
             link.className = "chapter-link";
             var number = document.createElement("span");
             number.className = "chapter-number";
-            number.textContent = String(chapterList.querySelectorAll(".chapter-link").length + 1).padStart(2, "0");
+            number.textContent = String(chapterLinks.querySelectorAll(".chapter-link").length + 1).padStart(2, "0");
             var label = document.createElement("span");
             label.textContent = section.nav || section.id;
             link.append(number, label);
@@ -525,7 +547,7 @@
               });
               if (window.matchMedia("(max-width: 700px)").matches) setSidebar(true);
             });
-            chapterList.appendChild(link);
+            chapterLinks.appendChild(link);
             var element = document.createElement("section");
             element.id = "section-" + section.id;
             element.innerHTML = section.html;
@@ -535,14 +557,14 @@
             });
             body.appendChild(element);
           });
-          var firstChapter = chapterList.querySelector(".chapter-link");
+          var firstChapter = chapterLinks.querySelector(".chapter-link");
           if (firstChapter) firstChapter.classList.add("active");
           sectionObserver = new IntersectionObserver(function (entries) {
             var visible = entries.find(function (entry) { return entry.isIntersecting; });
             if (!visible) return;
             var sectionId = visible.target.id;
             var index = Array.from(body.children).findIndex(function (section) { return section.id === sectionId; });
-            chapterList.querySelectorAll(".chapter-link").forEach(function (link, linkIndex) {
+            chapterLinks.querySelectorAll(".chapter-link").forEach(function (link, linkIndex) {
               link.classList.toggle("active", linkIndex === index);
             });
           }, { rootMargin: "-15% 0px -70% 0px" });
