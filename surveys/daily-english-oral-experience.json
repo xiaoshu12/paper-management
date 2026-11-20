@@ -1,0 +1,56 @@
+{
+  "title": "日常情境英语口语学习体验与交互需求调查问卷",
+  "subtitle": "25题 · 单选 / 多选 / 矩阵量表 / 开放题 · 预计 8—12 分钟",
+  "meta": [
+    "调研对象：18岁及以上、具备基础英语交流能力的英语学习者",
+    "题目数量：25题",
+    "题型：单选、多选、矩阵量表、开放题"
+  ],
+  "sections": [
+    {
+      "id": "intro",
+      "nav": "问卷说明",
+      "html": "<div class=\"section-kicker\">01 / INTRO</div>\n<h2 class=\"section-title\">问卷说明</h2>\n<p>本研究所说的&quot;碎片化英语学习&quot;，是指将学习者真实生活中的经历、需求、兴趣和具体情境，转化为相对独立、可单独完成的英语口语练习内容。它不特指利用零散时间学习。</p>\n<ul class=\"survey-options\"><li><strong>调研对象：</strong> 18岁及以上、具备基础英语交流能力的英语学习者</li><li><strong>预计填写时间：</strong> 8---12分钟</li><li><strong>题目数量：</strong> 25题</li><li><strong>题型：</strong> 单选、多选、矩阵量表、开放题</li></ul>"
+    },
+    {
+      "id": "part-1",
+      "nav": "第一部分：基本情况",
+      "html": "<div class=\"section-kicker\">02 / PART 1</div>\n<h2 class=\"section-title\">第一部分：用户基本情况</h2>\n<div class=\"callout\"><p><strong>目的：</strong> 了解用户的英语学习背景和口语能力。</p></div>\n<h3>Q1. 您的年龄是？【单选】</h3>\n<ul class=\"survey-options\"><li>A. 18岁以下</li><li>B. 18---24岁</li><li>C. 25---34岁</li><li>D. 35---44岁</li><li>E. 45岁及以上</li></ul>\n<h3>Q2. 您累计学习英语的时间是？【单选】</h3>\n<ul class=\"survey-options\"><li>A. 3年以下</li><li>B. 3---5年</li><li>C. 6---10年</li><li>D. 10年以上</li></ul>\n<h3>Q3. 您认为自己目前的英语口语水平属于哪种情况？【单选】</h3>\n<ul class=\"survey-options\"><li>A. 能听懂简单英语，但很难独立组织表达</li><li>B. 能进行简单日常对话，但经常出现卡壳</li><li>C. 能完成一般交流，但表达不够流畅或准确</li><li>D. 能较流畅地进行日常英语交流</li></ul>\n<h3>Q4. 过去三个月，您进行英语口语练习的频率是？【单选】</h3>\n<ul class=\"survey-options\"><li>A. 每周4次及以上</li><li>B. 每周1---3次</li><li>C. 每月1---3次</li><li>D. 少于每月1次</li><li>E. 几乎没有</li></ul>"
+    },
+    {
+      "id": "part-2",
+      "nav": "第二部分：学习行为",
+      "html": "<div class=\"section-kicker\">03 / PART 2</div>\n<h2 class=\"section-title\">第二部分：英语学习行为与内容需求</h2>\n<div class=\"callout\"><p><strong>目的：</strong> 了解用户目前学习什么，以及什么样的内容能够激发练习意愿。</p></div>\n<h3>Q5. 您目前主要通过哪些方式进行英语学习或口语练习？【多选】</h3>\n<ul class=\"survey-options\"><li>A. 英语学习APP</li><li>B. 在线英语课程</li><li>C. 线下英语课程</li><li>D. 与外教或语言伙伴交流</li><li>E. AI英语对话工具</li><li>F. 英语视频、播客等媒体</li><li>G. 跟读、模仿或录音练习</li><li>H. 在真实生活中使用英语</li><li>I. 其他：__________</li></ul>\n<h3>Q6. 您目前的英语口语练习内容主要来自哪里？【多选】</h3>\n<ul class=\"survey-options\"><li>A. 教材提供的标准化情境</li><li>B. 考试或课程要求</li><li>C. 日常生活中真实发生的事情</li><li>D. 自己的兴趣爱好</li><li>E. 工作或学习中的实际需求</li><li>F. 网络视频、新闻及其他媒体</li><li>G. 自己主动设定的练习主题</li></ul>\n<h3>Q7. 您希望将哪些真实生活场景转化为英语口语练习？【多选】</h3>\n<ul class=\"survey-options\"><li>A. 餐厅点餐、咖啡店消费</li><li>B. 酒店入住、旅行出行</li><li>C. 商店购物、日常消费</li><li>D. 工作沟通、职场交流</li><li>E. 学习交流、学术讨论</li><li>F. 社交聊天、结识新朋友</li><li>G. 问路、交通出行</li><li>H. 医疗、生活服务</li><li>I. 兴趣爱好及个人生活</li><li>J. 其他：__________</li></ul>\n<h3>Q8. 如果系统能够根据您真实发生过的生活经历或即将面对的实际需求，生成对应的英语口语练习内容，您的兴趣程度如何？【单选】</h3>\n<ul class=\"survey-options\"><li>1.  完全不感兴趣</li><li>2.  不太感兴趣</li><li>3.  一般</li><li>4.  比较感兴趣</li><li>5.  非常感兴趣</li></ul>\n<h3>Q9. 您认为目前的英语口语学习内容存在哪些问题？【最多选3项】</h3>\n<ul class=\"survey-options\"><li>A. 学习内容过于标准化，与自己的生活关联不大</li><li>B. 练习主题缺乏吸引力</li><li>C. 不知道应该练习哪些内容</li><li>D. 练习难度不符合自己的水平</li><li>E. 缺乏真实的交流情境</li><li>F. 缺少针对性的表达反馈</li><li>G. 过于强调正确性，容易产生心理压力</li><li>H. 学习内容难以应用到真实生活中</li><li>I. 其他：__________</li></ul>"
+    },
+    {
+      "id": "part-3",
+      "nav": "第三部分：困难与情绪",
+      "html": "<div class=\"section-kicker\">04 / PART 3</div>\n<h2 class=\"section-title\">第三部分：英语口语表达困难与情绪体验</h2>\n<div class=\"callout\"><p><strong>目的：</strong> 识别用户在实际交流中遇到的困难，以及这些困难带来的情绪影响。</p></div>\n<h3>Q10. 在英语口语交流中，您遇到以下情况的频率如何？【矩阵量表】</h3>\n<p>请对每一项分别选择：</p>\n<ol class=\"survey-notes\"><li>从未发生</li><li>很少发生</li><li>有时发生</li><li>经常发生</li><li>几乎每次发生</li></ol>\n<div class=\"table-wrap\"><table><thead><tr><th>具体情况</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr></thead><tbody><tr><td>想表达某个意思，但想不起对应的英语单词</td><td>○</td><td>○</td><td>○</td><td>○</td><td>○</td></tr><tr><td>知道自己想说什么，但不知道如何组织句子</td><td>○</td><td>○</td><td>○</td><td>○</td><td>○</td></tr><tr><td>说话时不确定语法、词汇使用是否正确</td><td>○</td><td>○</td><td>○</td><td>○</td><td>○</td></tr><tr><td>知道怎么说，但担心发音不准确</td><td>○</td><td>○</td><td>○</td><td>○</td><td>○</td></tr><tr><td>听不懂对方的回应，导致交流中断</td><td>○</td><td>○</td><td>○</td><td>○</td><td>○</td></tr><tr><td>无法快速组织回应，不知道接下来怎么说</td><td>○</td><td>○</td><td>○</td><td>○</td><td>○</td></tr><tr><td>发现自己表达有误，需要重新组织或修正</td><td>○</td><td>○</td><td>○</td><td>○</td><td>○</td></tr></tbody></table></div>\n<h3>Q11. 当您在英语交流中遇到表达困难时，通常会怎么做？【多选】</h3>\n<ul class=\"survey-options\"><li>A. 暂停思考，尝试回忆表达方式</li><li>B. 换一种更简单的说法</li><li>C. 使用其他相近的英语单词代替</li><li>D. 借助中文、翻译工具或其他辅助方式</li><li>E. 请求对方重复或解释</li><li>F. 主动寻求提示或帮助</li><li>G. 放弃当前表达，转移话题</li><li>H. 直接结束交流</li><li>I. 其他：__________</li></ul>\n<h3>Q12. 当您无法顺利表达英语时，通常会产生哪些情绪？【多选】</h3>\n<ul class=\"survey-options\"><li>A. 紧张</li><li>B. 焦虑</li><li>C. 尴尬</li><li>D. 挫败</li><li>E. 困惑</li><li>F. 缺乏自信</li><li>G. 无明显情绪变化</li><li>H. 其他：__________</li></ul>\n<h3>Q13. 当您在英语交流中出现错误或表达卡顿时，对您继续交流的意愿有多大影响？【单选】</h3>\n<ul class=\"survey-options\"><li>1.  完全没有影响</li><li>2.  影响较小</li><li>3.  有一定影响</li><li>4.  影响较大</li><li>5.  会明显降低继续交流的意愿</li></ul>\n<h3>Q14. 您最希望通过英语口语练习改善哪些方面？【最多选3项】</h3>\n<ul class=\"survey-options\"><li>A. 能够更快地组织英语表达</li><li>B. 减少表达过程中的卡壳</li><li>C. 提高词汇和句型运用能力</li><li>D. 提高语法和发音准确性</li><li>E. 提高对话理解和回应能力</li><li>F. 提高持续交流的意愿</li><li>G. 降低开口时的紧张和焦虑</li><li>H. 增强真实生活中的英语沟通能力</li></ul>"
+    },
+    {
+      "id": "part-4",
+      "nav": "第四部分：心理需求",
+      "html": "<div class=\"section-kicker\">05 / PART 4</div>\n<h2 class=\"section-title\">第四部分：基于自我决定理论的心理需求</h2>\n<div class=\"callout\"><p><strong>目的：</strong> 了解用户在英语学习中的自主感、胜任感和关系感需求。</p></div>\n<h3>Q15. 请评价以下英语学习体验。【矩阵量表】</h3>\n<p>请对每条陈述分别评价两个维度：</p>\n<ul class=\"survey-options\"><li><strong>当前体验：</strong></li></ul>\n<p>1＝完全不符合，2＝不太符合，3＝一般，4＝比较符合，5＝非常符合。</p>\n<ul class=\"survey-options\"><li><strong>未来期待：</strong></li></ul>\n<p>1＝完全不重要，2＝不太重要，3＝一般，4＝比较重要，5＝非常重要。</p>\n<div class=\"table-wrap\"><table><thead><tr><th>理论维度</th><th>具体陈述</th><th>当前体验（1—5）</th><th>未来期待（1—5）</th></tr></thead><tbody><tr><td>自主感</td><td>我能够自主选择与自己生活需求、兴趣相关的练习内容</td><td></td><td></td></tr><tr><td>自主感</td><td>我能够自主决定练习内容的顺序和推进节奏</td><td></td><td></td></tr><tr><td>自主感</td><td>我能够自主决定是否接受提示，以及需要多少帮助</td><td></td><td></td></tr><tr><td>胜任感</td><td>练习内容的难度与我目前的英语水平相匹配</td><td></td><td></td></tr><tr><td>胜任感</td><td>我能够从反馈中明确知道自己的表达问题以及改进方向</td><td></td><td></td></tr><tr><td>胜任感</td><td>当我遇到表达困难时，获得的帮助能够让我继续完成表达，而不是直接替我说完</td><td></td><td></td></tr><tr><td>关系感</td><td>对话对象能够理解我想表达的意思，并围绕我的表达进行回应</td><td></td><td></td></tr><tr><td>关系感</td><td>当我表达错误时，对话对象能够耐心回应，而不是让我感到被评判</td><td></td><td></td></tr><tr><td>关系感</td><td>对话对象能够结合上下文自然回应，让交流具有连续性</td><td></td><td></td></tr></tbody></table></div>"
+    },
+    {
+      "id": "part-5",
+      "nav": "第五部分：NPC帮助",
+      "html": "<div class=\"section-kicker\">06 / PART 5</div>\n<h2 class=\"section-title\">第五部分：NPC交互帮助方式需求</h2>\n<div class=\"callout\"><p><strong>目的：</strong>了解用户希望NPC什么时候提供帮助、如何提供帮助，以及帮助到什么程度。</p></div>\n<h3>Q16. 当您在英语口语练习中遇到困难时，您认为系统在什么情况下介入比较合适？【最多选3项】</h3>\n<ul class=\"survey-options\"><li>A. 当我主动提出需要帮助时</li><li>B. 当我停顿较长时间，仍未继续表达时</li><li>C. 当我多次尝试仍无法完成表达时</li><li>D. 当对话因我的表达问题而无法继续时</li><li>E. 当我出现明显影响意思理解的表达错误时</li><li>F. 当我主动表现出困惑或不确定时</li><li>G. 希望系统尽量不主动干预，让我自己尝试</li></ul>\n<h3>Q17. 当系统判断您可能遇到表达困难时，您更希望NPC采用哪种方式提供帮助？【单选】</h3>\n<ul class=\"survey-options\"><li>A. 仅在我主动请求时才提供帮助</li><li>B. 先询问我是否需要帮助，得到确认后再提供提示</li><li>C. 当系统判断我明显遇到困难时，直接提供简短提示</li><li>D. 其他：__________</li></ul>\n<h3>Q18. 您认为以下哪些帮助方式对自己最有用？【最多选3项】</h3>\n<ul class=\"survey-options\"><li>A. 提供相关意思或语义线索</li><li>B. 提供关键词汇</li><li>C. 提供可参考的句型</li><li>D. 通过提问引导我自己组织表达</li><li>E. 补全部分尚未表达的句子</li><li>F. 给出完整的参考表达</li><li>G. 指出表达错误并提供修正建议</li><li>H. 提供鼓励性回应</li></ul>\n<h3>Q19. 当您无法完成一句英语表达时，您更希望获得什么程度的帮助？【单选】</h3>\n<ul class=\"survey-options\"><li>A. 轻度帮助：只给关键词或少量线索，由我自己组织完整句子</li><li>B. 中度帮助：提供句型框架或补全部分表达</li><li>C. 深度帮助：直接提供完整的参考句子</li><li>D. 渐进式帮助：先给少量提示，如果仍然无法表达，再逐步增加帮助</li><li>E. 根据不同困难情况灵活调整</li></ul>\n<h3>Q20. 当NPC向您提供提示时，您希望拥有哪些控制权？【多选】</h3>\n<ul class=\"survey-options\"><li>A. 可以随时拒绝或跳过提示</li><li>B. 可以主动请求更详细的提示</li><li>C. 可以重复查看或听取提示</li><li>D. 可以自主选择提示的程度</li><li>E. 可以关闭NPC的主动帮助</li><li>F. 可以在练习结束后查看完整的表达反馈</li></ul>\n<h3>Q21. 以下哪些NPC的回应方式会让您感到更舒适、更愿意继续交流？【最多选3项】</h3>\n<ul class=\"survey-options\"><li>A. 耐心等待我完成表达</li><li>B. 理解并回应我真正想表达的意思</li><li>C. 在我遇到困难时给予适度鼓励</li><li>D. 通过自然的追问帮助我继续交流</li><li>E. 用友好、平等的方式指出表达问题</li><li>F. 记住当前对话的上下文，保持交流连贯性</li><li>G. 其他：__________</li></ul>\n<h3>Q22. 您不希望NPC出现哪些交互行为？【最多选3项】</h3>\n<ul class=\"survey-options\"><li>A. 在我思考时频繁打断</li><li>B. 在我还没有尝试表达前就直接给出答案</li><li>C. 对每一个细小错误都进行纠正</li><li>D. 给予过度夸张或不自然的鼓励</li><li>E. 忽略我真正想表达的意思</li><li>F. 频繁评价或比较我的英语水平</li><li>G. 其他：__________</li></ul>"
+    },
+    {
+      "id": "part-6",
+      "nav": "第六部分：隐私需求",
+      "html": "<div class=\"section-kicker\">07 / PART 6</div>\n<h2 class=\"section-title\">第六部分：个性化内容与隐私需求</h2>\n<div class=\"callout\"><p><strong>目的：</strong> 了解用户对个人生活信息用于生成学习内容的接受程度。</p></div>\n<h3>Q23. 如果系统根据您的个人生活信息生成英语练习内容，您愿意授权使用哪些信息？【多选】</h3>\n<ul class=\"survey-options\"><li>A. 自己主动输入的生活经历</li><li>B. 自己选择的兴趣爱好</li><li>C. 过去发生过的旅行经历</li><li>D. 日常消费和饮食偏好</li><li>E. 即将发生的出行或活动计划</li><li>F. 日常活动及行为记录</li><li>G. 不希望系统使用个人信息生成练习内容</li><li>H. 其他：__________</li></ul>\n<h3>Q24. 对于个人生活信息的使用，您希望系统提供哪些控制方式？【多选】</h3>\n<ul class=\"survey-options\"><li>A. 每次使用个人信息前征求我的同意</li><li>B. 可以查看系统提取了哪些信息</li><li>C. 可以修改或删除生成的练习内容</li><li>D. 可以随时撤回数据授权</li><li>E. 不同类型的个人信息可以分别授权</li><li>F. 个人信息不用于其他无关目的</li><li>G. 其他：__________</li></ul>\n<h3>Q25. 您认为目前的英语口语学习方式还有哪些不足？或者您最希望未来的英语口语学习系统为您解决什么问题？【开放题】</h3>\n<p>请根据自己的真实经历填写：</p>"
+    },
+    {
+      "id": "mapping",
+      "nav": "题目与研究对应",
+      "html": "<div class=\"section-kicker\">08 / MAPPING</div>\n<h2 class=\"section-title\">附：问卷题目与论文研究的对应关系</h2>\n<div class=\"table-wrap\"><table><thead><tr><th>问卷模块</th><th>对应研究内容</th><th>后续设计用途</th></tr></thead><tbody><tr><td>第一部分：用户基本情况</td><td>目标用户特征</td><td>用户画像</td></tr><tr><td>第二部分：学习行为与内容需求</td><td>真实生活内容需求</td><td>个性化学习内容生成</td></tr><tr><td>第三部分：表达困难与情绪体验</td><td>口语困难与情绪体验</td><td>口语困难识别、体验优化</td></tr><tr><td>第四部分：心理需求</td><td>自主感、胜任感、关系感</td><td>基于自我决定理论的交互设计策略</td></tr><tr><td>第五部分：交互帮助需求</td><td>主动帮助与语言支架需求</td><td>NPC帮助介入策略实验</td></tr><tr><td>第六部分：个性化与隐私需求</td><td>个人信息使用意愿与控制需求</td><td>个人生活信息管理机制</td></tr></tbody></table></div>"
+    },
+    {
+      "id": "notes",
+      "nav": "发放注意事项",
+      "html": "<div class=\"section-kicker\">09 / NOTES</div>\n<h2 class=\"section-title\">正式发放前的注意事项</h2>\n<ol class=\"survey-notes\"><li><strong>不要把所有题目都当作心理量表。</strong>Q15是根据自我决定理论设计的需求探索题项，不等同于经过验证的心理需求量表。若后续实验需要测量心理需求满足程度，应另行选择经过验证的量表。</li><li><strong>偏好不等于效果。</strong>Q16---Q19调查的是用户偏好，不能据此证明主动帮助或某种帮助深度更有效；相关策略仍需通过后续实验验证。</li><li><strong>进行预测试。</strong>正式发放前，建议邀请5---8名符合目标用户特征的参与者进行认知访谈，重点检查其对&quot;碎片化英语学习&quot;、表达困难、帮助方式和帮助程度等概念的理解是否一致。</li><li><strong>检查选项设置。</strong>多选题应根据问卷平台设置&quot;其他&quot;填空；Q23中的&quot;不同意授权&quot;选项应设置为互斥选项。Q12中的&quot;无明显情绪变化&quot;也应设置为互斥选项。</li><li><strong>明确样本筛选条件。</strong>如果本研究目标用户限定为具备基础英语交流能力的成年学习者，应在问卷开头设置筛选题，避免不符合条件的样本进入正式分析。</li></ol>"
+    }
+  ]
+}

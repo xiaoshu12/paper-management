@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="论文管理：浏览论文分析，记录导师讨论笔记。">
+  <meta name="description" content="论文管理：浏览论文分析、问卷与导师讨论笔记。">
   <title>论文管理</title>
   <style>
     :root {
@@ -77,6 +77,7 @@
     .app[data-collapsed="true"] .nav-label,
     .app[data-collapsed="true"] .section-head,
     .app[data-collapsed="true"] .paper-list,
+    .app[data-collapsed="true"] #surveyList,
     .app[data-collapsed="true"] .sidebar-footer { display: none; }
     .app[data-collapsed="true"] .brand { flex-wrap: wrap; justify-content: center; padding-left: 0; padding-right: 0; }
     .app[data-collapsed="true"] .toggle { margin: 0; }
@@ -239,6 +240,29 @@
       font-size: 12px;
       line-height: 1.45;
     }
+    #surveyView { max-width: 1040px; margin-inline: auto; }
+    .survey-header { border-bottom: 1px solid #e5e9f1; padding-bottom: 28px; }
+    .survey-header h1 { max-width: 880px; margin-bottom: 14px; }
+    .survey-meta { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-top: 18px; color: #67748a; font-size: 13px; }
+    .survey-body { width: 100%; }
+    .survey-body section { scroll-margin-top: 24px; padding: 32px 0 36px; border-bottom: 1px solid #e5e9f1; }
+    .survey-body .section-kicker { color: #5766cb; font-size: 11px; font-weight: 750; letter-spacing: .12em; }
+    .survey-body .section-title { margin: 8px 0 18px; font-size: clamp(24px, 3vw, 30px); line-height: 1.35; }
+    .survey-body h3 { margin: 28px 0 10px; font-size: 18px; line-height: 1.45; }
+    .survey-body p, .survey-body li { color: #46536a; line-height: 1.85; }
+    .survey-body p { margin: 12px 0; }
+    .survey-body ul, .survey-body ol { padding-left: 23px; }
+    .survey-body li + li { margin-top: 7px; }
+    .survey-body strong { color: #253047; }
+    .survey-body .callout { margin: 16px 0 20px; padding: 14px 18px; border-radius: 10px; background: #eef2fb; }
+    .survey-body .callout p { margin: 0; }
+    .survey-body .survey-options { margin: 10px 0 18px; padding: 14px 18px 14px 36px; border: 1px solid #e2e7ef; border-radius: 12px; background: #fff; }
+    .survey-body .survey-notes li + li { margin-top: 12px; }
+    .survey-body .table-wrap { overflow-x: auto; margin: 18px 0; border: 1px solid #e2e7ef; border-radius: 10px; }
+    .survey-body table { width: 100%; border-collapse: collapse; min-width: 560px; font-size: 14px; }
+    .survey-body th, .survey-body td { padding: 11px 14px; text-align: left; vertical-align: top; border-bottom: 1px solid #e9ecf3; line-height: 1.55; }
+    .survey-body th { background: #f4f6fa; color: #4c5970; font-weight: 700; }
+    .survey-body tr:last-child td { border-bottom: 0; }
     .status { min-height: 22px; margin: 12px 0 0; color: #5262c6; font-size: 13px; }
     [hidden] { display: none !important; }
     .scrim { display: none; }
@@ -259,10 +283,10 @@
       .sidebar, .scrim, .paper-actions { display: none !important; }
       .main { margin: 0; padding: 0; }
       .content, #paperView, .paper-body { max-width: none; }
-      .paper-header, .paper-body section { break-inside: avoid-page; }
+      .paper-header, .paper-body section, .survey-header, .survey-body section { break-inside: avoid-page; }
       .paper-body .grid-2, .paper-body .grid-3 { break-inside: avoid-page; }
-      .paper-body .table-wrap { overflow: visible; }
-      .paper-body table { min-width: 0; }
+      .paper-body .table-wrap, .survey-body .table-wrap { overflow: visible; }
+      .paper-body table, .survey-body table { min-width: 0; }
       .paper-body .figure { break-inside: avoid-page; }
       .paper-body .figure img { max-width: 100%; }
     }
@@ -286,6 +310,10 @@
           <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5h16v13H4zM8 5.5v13M11 9h5M11 13h5"/></svg>
           <span class="nav-label">论文目录</span>
         </button>
+        <button class="nav-button" id="surveyNav" type="button" title="问卷">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6.5h11M8 12h11M8 17.5h11M5 6.5h.01M5 12h.01M5 17.5h.01"/></svg>
+          <span class="nav-label">问卷</span>
+        </button>
         <button class="nav-button" id="notesNav" type="button" title="Notes">
           <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3.5h11l3 3v14H5zM16 3.5v4h3M8 11h8M8 15h8"/></svg>
           <span class="nav-label">Notes</span>
@@ -293,6 +321,8 @@
       </nav>
       <div class="section-head"><span>论文</span><span class="paper-count" id="paperCount">0</span></div>
       <nav class="paper-list" id="paperList" aria-label="论文列表"></nav>
+      <div class="section-head"><span>问卷</span><span class="paper-count" id="surveyCount">0</span></div>
+      <nav class="paper-list" id="surveyList" aria-label="问卷列表"></nav>
       <div class="sidebar-footer">Paper Management</div>
     </aside>
     <main class="main">
@@ -330,6 +360,18 @@
             <p id="takeawayDetail"></p>
           </aside>
           <article class="paper-body" id="paperBody" aria-live="polite"></article>
+        </section>
+        <section id="surveyView" aria-labelledby="surveyTitle" hidden>
+          <header class="survey-header">
+            <div class="eyebrow">问卷 / SURVEY</div>
+            <h1 id="surveyTitle"></h1>
+            <p class="paper-subtitle" id="surveySubtitle"></p>
+            <div class="survey-meta" id="surveyMeta"></div>
+            <div class="paper-actions">
+              <button class="button" id="printSurvey" type="button">打印 / 导出 PDF</button>
+            </div>
+          </header>
+          <article class="survey-body" id="surveyBody" aria-live="polite"></article>
         </section>
         <section id="notesView" aria-labelledby="notesTitle" hidden>
           <div class="notes-head">
@@ -382,9 +424,13 @@
       var sidebarKey = "paper-management-sidebar-v1";
       var app = document.getElementById("app");
       var papers = [];
+      var surveys = [];
       var paperCache = {};
+      var surveyCache = {};
       var activePaper = null;
+      var activeSurvey = null;
       var sectionObserver = null;
+      var surveyObserver = null;
       var notes = [];
       var editingId = null;
       var noteForm = document.getElementById("noteForm");
@@ -450,6 +496,70 @@
         button.appendChild(label);
         button.addEventListener("click", function () { location.hash = "paper/" + encodeURIComponent(paper.id); });
         return button;
+      }
+      function makeSurveyLink(survey) {
+        var button = document.createElement("button");
+        button.type = "button";
+        button.className = "paper-link";
+        button.title = survey.title;
+        button.appendChild(makeIcon());
+        var label = document.createElement("span");
+        label.className = "paper-title";
+        label.textContent = survey.title;
+        button.appendChild(label);
+        button.addEventListener("click", function () { location.hash = "survey/" + encodeURIComponent(survey.id); });
+        return button;
+      }
+      function renderSurveys() {
+        var list = document.getElementById("surveyList");
+        list.replaceChildren();
+        document.getElementById("surveyCount").textContent = String(surveys.length);
+        if (!surveys.length) {
+          var empty = document.createElement("p");
+          empty.className = "sidebar-empty";
+          empty.textContent = "暂无问卷";
+          list.appendChild(empty);
+          return;
+        }
+        surveys.forEach(function (survey) {
+          var item = document.createElement("div");
+          item.className = "paper-item";
+          item.appendChild(makeSurveyLink(survey));
+          var chapters = document.createElement("div");
+          chapters.className = "chapter-list survey-chapter-list";
+          chapters.dataset.surveyId = survey.id;
+          chapters.setAttribute("aria-label", survey.title + "的章节");
+          chapters.hidden = true;
+          var chapterToggle = document.createElement("button");
+          chapterToggle.type = "button";
+          chapterToggle.className = "chapter-toggle";
+          chapterToggle.setAttribute("aria-expanded", "false");
+          chapterToggle.setAttribute("aria-controls", "survey-chapters-" + survey.id);
+          var chapterTitle = document.createElement("span");
+          chapterTitle.textContent = "本篇目录";
+          var chevron = document.createElement("span");
+          chevron.className = "chapter-chevron";
+          chevron.setAttribute("aria-hidden", "true");
+          chevron.textContent = "▸";
+          chapterToggle.append(chapterTitle, chevron);
+          var chapterLinks = document.createElement("div");
+          chapterLinks.className = "chapter-links";
+          chapterLinks.id = "survey-chapters-" + survey.id;
+          chapterLinks.hidden = true;
+          chapterToggle.addEventListener("click", function () {
+            chapterLinks.hidden = !chapterLinks.hidden;
+            chapterToggle.setAttribute("aria-expanded", String(!chapterLinks.hidden));
+          });
+          chapters.append(chapterToggle, chapterLinks);
+          item.appendChild(chapters);
+          list.appendChild(item);
+        });
+      }
+      function validSurvey(survey) {
+        return survey && typeof survey.id === "string" && /^[a-z0-9-]+$/.test(survey.id) &&
+          typeof survey.title === "string" && survey.title.trim() &&
+          typeof survey.file === "string" && survey.file.startsWith("surveys/") &&
+          survey.file.endsWith(".json") && !survey.file.split("/").includes("..");
       }
       function renderPapers() {
         var list = document.getElementById("paperList");
@@ -537,8 +647,86 @@
           papers = [];
           document.querySelector("#homeEmpty .muted").textContent = "论文目录暂时无法加载，请稍后刷新页面。";
         }
+        try {
+          var surveyResponse = await fetch("./surveys.json", { cache: "no-store" });
+          if (!surveyResponse.ok) throw new Error("问卷目录不可用");
+          var surveyData = await surveyResponse.json();
+          surveys = Array.isArray(surveyData) ? surveyData.filter(validSurvey) : [];
+        } catch (error) {
+          surveys = [];
+        }
         renderPapers();
+        renderSurveys();
         renderRoute();
+      }
+      async function loadSurvey(survey) {
+        var body = document.getElementById("surveyBody");
+        body.textContent = "正在加载问卷…";
+        if (surveyObserver) surveyObserver.disconnect();
+        try {
+          var data = surveyCache[survey.id];
+          if (!data) {
+            var response = await fetch("./" + survey.file, { cache: "no-store" });
+            if (!response.ok) throw new Error("问卷不可用");
+            data = await response.json();
+            if (!data || !Array.isArray(data.sections)) throw new Error("问卷格式不正确");
+            surveyCache[survey.id] = data;
+          }
+          if (activeSurvey !== survey.id) return;
+          document.getElementById("surveySubtitle").textContent = data.subtitle || "";
+          var meta = document.getElementById("surveyMeta");
+          meta.replaceChildren();
+          (data.meta || []).forEach(function (value) {
+            var span = document.createElement("span");
+            span.textContent = value;
+            meta.appendChild(span);
+          });
+          body.replaceChildren();
+          var chapterList = Array.from(document.querySelectorAll(".survey-chapter-list")).find(function (list) {
+            return list.dataset.surveyId === survey.id;
+          });
+          var chapterLinks = chapterList.querySelector(".chapter-links");
+          chapterLinks.replaceChildren();
+          chapterList.querySelector(".chapter-toggle span").textContent = "本篇目录 · " + data.sections.length + " 节";
+          data.sections.forEach(function (section) {
+            if (!/^[a-z0-9-]+$/.test(section.id) || typeof section.html !== "string") return;
+            var link = document.createElement("button");
+            link.type = "button";
+            link.className = "chapter-link";
+            var number = document.createElement("span");
+            number.className = "chapter-number";
+            number.textContent = String(chapterLinks.querySelectorAll(".chapter-link").length + 1).padStart(2, "0");
+            var label = document.createElement("span");
+            label.textContent = section.nav || section.id;
+            link.append(number, label);
+            link.addEventListener("click", function () {
+              document.getElementById("survey-section-" + section.id).scrollIntoView({ behavior: "smooth" });
+              chapterLinks.querySelectorAll(".chapter-link").forEach(function (item) {
+                item.classList.toggle("active", item === link);
+              });
+              if (window.matchMedia("(max-width: 700px)").matches) setSidebar(true);
+            });
+            chapterLinks.appendChild(link);
+            var element = document.createElement("section");
+            element.id = "survey-section-" + section.id;
+            element.innerHTML = section.html;
+            body.appendChild(element);
+          });
+          var firstChapter = chapterLinks.querySelector(".chapter-link");
+          if (firstChapter) firstChapter.classList.add("active");
+          surveyObserver = new IntersectionObserver(function (entries) {
+            var visible = entries.find(function (entry) { return entry.isIntersecting; });
+            if (!visible) return;
+            var sectionId = visible.target.id;
+            var index = Array.from(body.children).findIndex(function (section) { return section.id === sectionId; });
+            chapterLinks.querySelectorAll(".chapter-link").forEach(function (link, linkIndex) {
+              link.classList.toggle("active", linkIndex === index);
+            });
+          }, { rootMargin: "-15% 0px -70% 0px" });
+          body.querySelectorAll(":scope > section").forEach(function (section) { surveyObserver.observe(section); });
+        } catch (error) {
+          if (activeSurvey === survey.id) body.textContent = "问卷暂时无法加载，请刷新后重试。";
+        }
       }
       async function loadPaper(paper) {
         var body = document.getElementById("paperBody");
@@ -633,17 +821,32 @@
       function renderRoute() {
         var hash = decodeURIComponent(location.hash.slice(1));
         var paper = hash.startsWith("paper/") ? papers.find(function (item) { return item.id === hash.slice(6); }) : null;
-        var view = hash === "notes" ? "notes" : paper ? "paper" : "home";
+        var survey = null;
+        if (hash === "survey" || hash === "surveys") {
+          survey = surveys[0] || null;
+        } else if (hash.startsWith("survey/")) {
+          survey = surveys.find(function (item) { return item.id === hash.slice(7); }) || null;
+        }
+        var view = hash === "notes" ? "notes" : survey ? "survey" : paper ? "paper" : "home";
         document.getElementById("homeView").hidden = view !== "home";
         document.getElementById("notesView").hidden = view !== "notes";
         document.getElementById("paperView").hidden = view !== "paper";
+        document.getElementById("surveyView").hidden = view !== "survey";
         document.getElementById("homeNav").classList.toggle("active", view === "home" || view === "paper");
+        document.getElementById("surveyNav").classList.toggle("active", view === "survey");
         document.getElementById("notesNav").classList.toggle("active", view === "notes");
-        document.querySelectorAll(".paper-link").forEach(function (button, index) {
+        document.querySelectorAll("#paperList .paper-link").forEach(function (button, index) {
           button.classList.toggle("active", !!paper && papers[index].id === paper.id);
         });
+        document.querySelectorAll("#surveyList .paper-link").forEach(function (button, index) {
+          button.classList.toggle("active", !!survey && surveys[index].id === survey.id);
+        });
         document.querySelectorAll(".chapter-list").forEach(function (list) {
-          list.hidden = !paper || list.dataset.paperId !== paper.id;
+          if (list.classList.contains("survey-chapter-list")) {
+            list.hidden = !survey || list.dataset.surveyId !== survey.id;
+          } else {
+            list.hidden = !paper || list.dataset.paperId !== paper.id;
+          }
         });
         if (paper) {
           document.getElementById("paperTitle").textContent = paper.title;
@@ -654,6 +857,16 @@
         } else {
           activePaper = null;
           if (sectionObserver) sectionObserver.disconnect();
+        }
+        if (survey) {
+          document.getElementById("surveyTitle").textContent = survey.title;
+          if (activeSurvey !== survey.id) {
+            activeSurvey = survey.id;
+            loadSurvey(survey);
+          }
+        } else {
+          activeSurvey = null;
+          if (surveyObserver) surveyObserver.disconnect();
         }
         if (window.matchMedia("(max-width: 700px)").matches) setSidebar(true);
       }
@@ -783,8 +996,13 @@
       document.getElementById("toggleSidebar").addEventListener("click", function () { setSidebar(app.dataset.collapsed !== "true"); });
       document.getElementById("scrim").addEventListener("click", function () { setSidebar(true); });
       document.getElementById("homeNav").addEventListener("click", function () { location.hash = "papers"; renderRoute(); });
+      document.getElementById("surveyNav").addEventListener("click", function () {
+        location.hash = surveys[0] ? "survey/" + encodeURIComponent(surveys[0].id) : "survey";
+        renderRoute();
+      });
       document.getElementById("notesNav").addEventListener("click", function () { location.hash = "notes"; renderRoute(); });
       document.getElementById("printPaper").addEventListener("click", function () { window.print(); });
+      document.getElementById("printSurvey").addEventListener("click", function () { window.print(); });
       document.getElementById("paperBody").addEventListener("click", function (event) {
         var button = event.target.closest("[data-copy-review]");
         if (!button) return;

@@ -13,6 +13,15 @@
 
 id 使用小写英文字母、数字和连字符，且每篇论文不重复。title、year 和 file 可以按实际内容修改。
 
+## 添加问卷
+
+1. 将问卷整理为 JSON 文件，放在 `surveys/` 目录。JSON 包含 `title`、`subtitle`、`meta` 和 `sections`；每个 section 包含 `id`、`nav` 和 `html`。
+2. 在 `surveys.json` 中添加目录记录，例如：
+
+   `{"id":"example-survey","title":"问卷标题","file":"surveys/example-survey.json"}`
+
+3. 提交到 main 分支后，左侧「问卷」导航会出现该问卷。
+
 ## Notes
 
 Notes 仅保存在当前浏览器的本地存储中，不会上传到 GitHub，也不会让网站访客看到。支持新增、编辑、删除，以及通过 JSON 文件导出和导入备份。换设备或清除浏览器数据前，请先导出备份。
