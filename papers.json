@@ -22,5 +22,11 @@
     "title": "自适应解题帮助的学生产出模型（HNU）",
     "year": "2023",
     "file": "papers/maniktala-chi-barnes-2023-hnu.json"
+  },
+  {
+    "id": "ayedoun-tokumaru-2022-emotional-agent",
+    "title": "情绪表达虚拟人促进 L2 口语产出（WoZ）",
+    "year": "2022",
+    "file": "papers/ayedoun-tokumaru-2022-emotional-agent.json"
   }
 ]
