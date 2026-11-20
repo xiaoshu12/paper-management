@@ -107,7 +107,75 @@
     .note-actions { display: flex; gap: 13px; }
     .text-button { border: 0; background: transparent; padding: 2px 0; color: #4c5bd4; font-size: 13px; font-weight: 650; }
     .text-button.danger { color: #bd4251; }
-    .paper-frame { display: block; margin-top: 28px; width: 100%; height: calc(100vh - 230px); min-height: 560px; border: 1px solid #e7eaf1; border-radius: 16px; background: #fff; }
+    .paper-header { border-bottom: 1px solid #e5e9f1; padding-bottom: 32px; }
+    .paper-header h1 { max-width: 850px; margin-bottom: 18px; }
+    .paper-subtitle { max-width: 790px; color: #58657a; line-height: 1.6; font-size: 17px; }
+    .paper-facts { display: flex; flex-wrap: wrap; gap: 8px 24px; margin-top: 22px; color: #67748a; font-size: 13px; }
+    .paper-facts strong { color: #33415d; }
+    .paper-tags { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 20px; }
+    .paper-tags span { padding: 5px 9px; border-radius: 6px; background: #edf0fa; color: #4d5c78; font-size: 12px; }
+    .paper-actions { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 24px; }
+    .paper-actions .button { padding: 8px 12px; font-size: 13px; }
+    .paper-takeaway { margin: 28px 0 26px; padding: 25px 28px; border-left: 4px solid #5162d4; border-radius: 0 14px 14px 0; background: #edf0fd; }
+    .paper-takeaway .eyebrow { margin-bottom: 12px; }
+    .paper-takeaway h2 { max-width: 800px; font-size: clamp(20px, 2.5vw, 27px); line-height: 1.5; }
+    .paper-takeaway p { max-width: 800px; margin: 10px 0 0; color: #526078; line-height: 1.8; }
+    .article-toc { display: flex; gap: 8px; overflow-x: auto; padding: 0 0 15px; margin: 0 0 20px; border-bottom: 1px solid #e5e9f1; scrollbar-width: thin; }
+    .article-toc a { flex: none; padding: 8px 11px; border: 1px solid #e2e6f0; border-radius: 8px; color: #536079; background: #fff; text-decoration: none; font-size: 13px; }
+    .article-toc a:hover { border-color: #8995e8; color: #414fc4; }
+    .paper-body { max-width: 900px; }
+    .paper-body section { scroll-margin-top: 24px; padding: 36px 0 40px; border-bottom: 1px solid #e5e9f1; }
+    .paper-body section:first-child { padding-top: 12px; }
+    .paper-body .section-kicker { color: #5766cb; font-size: 11px; font-weight: 750; letter-spacing: .12em; }
+    .paper-body .section-title { margin: 8px 0 20px; font-size: clamp(25px, 3vw, 32px); line-height: 1.35; }
+    .paper-body h3 { margin: 30px 0 11px; font-size: 19px; line-height: 1.45; }
+    .paper-body p, .paper-body li { color: #46536a; line-height: 1.85; }
+    .paper-body p { margin: 12px 0; }
+    .paper-body ul, .paper-body ol { padding-left: 23px; }
+    .paper-body li + li { margin-top: 8px; }
+    .paper-body strong, .paper-body b { color: #253047; }
+    .paper-body .lead { font-size: 16px; color: #46536a; }
+    .paper-body .grid-2, .paper-body .grid-3 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin: 20px 0; }
+    .paper-body .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .paper-body .mini-card, .paper-body .chart-card, .paper-body .example, .paper-body .flow-node { border: 1px solid #e2e7ef; border-radius: 12px; padding: 18px; background: #fff; }
+    .paper-body .mini-card p { margin: 8px 0 0; font-size: 14px; }
+    .paper-body .num, .paper-body .card-label { margin-bottom: 10px; color: #5362c8; font-size: 12px; font-weight: 750; letter-spacing: .06em; }
+    .paper-body .callout, .paper-body .note { margin: 20px 0; padding: 16px 19px; border-radius: 10px; background: #eef2fb; }
+    .paper-body .note { background: #f5f6f9; }
+    .paper-body .warn { background: #fff7e8; }
+    .paper-body .callout p, .paper-body .note p { margin: 0; }
+    .paper-body .note strong + p { margin-top: 8px; }
+    .paper-body .strategy { display: flex; gap: 10px; padding: 12px 0; border-top: 1px solid #e9ecf3; }
+    .paper-body .strategy-mark { flex: none; width: 24px; color: #6978d1; font-size: 12px; font-weight: 700; }
+    .paper-body .strategy p { margin: 4px 0 0; }
+    .paper-body .chat-line { display: grid; grid-template-columns: 135px 1fr; gap: 12px; padding: 8px 0; border-bottom: 1px solid #e9ecf3; }
+    .paper-body .chat-line:last-child { border-bottom: 0; }
+    .paper-body .chat-who { color: #5362c8; font-size: 13px; font-weight: 700; }
+    .paper-body .chat-text { color: #46536a; }
+    .paper-body .table-wrap { overflow-x: auto; margin: 20px 0; border: 1px solid #e2e7ef; border-radius: 10px; }
+    .paper-body table { width: 100%; border-collapse: collapse; min-width: 580px; font-size: 14px; }
+    .paper-body th, .paper-body td { padding: 11px 14px; text-align: left; vertical-align: top; border-bottom: 1px solid #e9ecf3; line-height: 1.55; }
+    .paper-body th { background: #f4f6fa; color: #4c5970; font-weight: 700; }
+    .paper-body tr:last-child td { border-bottom: 0; }
+    .paper-body .chart-card { margin: 20px 0; background: #fafbfe; }
+    .paper-body .chart-title { font-weight: 750; }
+    .paper-body .chart-sub, .paper-body .small, .paper-body .source-tag { color: #8591a4; font-size: 12px; }
+    .paper-body .bar-row { display: grid; grid-template-columns: 90px minmax(0, 1fr) 40px; align-items: center; gap: 10px; margin: 14px 0; font-size: 13px; }
+    .paper-body .bar-track { display: flex; height: 18px; overflow: hidden; border-radius: 5px; background: #e3e8f2; }
+    .paper-body .seg { height: 100%; }
+    .paper-body .gas, .paper-body .swatch.gas { background: #5362d3; }
+    .paper-body .pas, .paper-body .swatch.pas { background: #64a6a1; }
+    .paper-body .none, .paper-body .swatch.none { background: #c5cbd7; }
+    .paper-body .legend { display: flex; gap: 16px; flex-wrap: wrap; font-size: 12px; color: #67748a; }
+    .paper-body .swatch { display: inline-block; width: 9px; height: 9px; margin-right: 5px; border-radius: 2px; }
+    .paper-body .flow { max-width: 620px; margin: 22px auto; }
+    .paper-body .flow-node { text-align: center; padding: 13px; }
+    .paper-body .flow-node small { display: block; color: #77839a; margin-top: 4px; }
+    .paper-body .flow-arrow { padding: 4px; text-align: center; color: #8995bb; }
+    .paper-body .flow-split { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .paper-body blockquote { margin: 18px 0; padding: 18px 22px; border-left: 3px solid #9aa6e8; background: #f6f7fc; color: #46536a; line-height: 1.85; }
+    .paper-body a { color: #4757bd; overflow-wrap: anywhere; }
+    .paper-body .action { border: 1px solid #dce2ed; border-radius: 8px; background: #fff; padding: 9px 12px; color: #4351b4; }
     .status { min-height: 22px; margin: 12px 0 0; color: #5262c6; font-size: 13px; }
     [hidden] { display: none !important; }
     .scrim { display: none; }
@@ -119,6 +187,9 @@
       .app[data-collapsed="false"] .scrim { display: block; position: fixed; z-index: 10; inset: 0; background: rgba(26, 34, 56, .25); border: 0; }
       .notes-head { align-items: start; flex-direction: column; }
       .hero-card { margin-top: 28px; }
+      .paper-body .grid-2, .paper-body .grid-3 { grid-template-columns: 1fr; }
+      .paper-body .chat-line { grid-template-columns: 1fr; gap: 2px; }
+      .paper-takeaway { padding: 20px; }
     }
   </style>
 </head>
@@ -167,10 +238,24 @@
           <div id="homePapers" hidden></div>
         </section>
         <section id="paperView" aria-labelledby="paperTitle" hidden>
-          <div class="eyebrow">PAPER ANALYSIS</div>
-          <h1 id="paperTitle"></h1>
-          <p class="lead" id="paperMeta"></p>
-          <iframe class="paper-frame" id="paperFrame" title="论文分析内容" loading="lazy"></iframe>
+          <header class="paper-header">
+            <div class="eyebrow">论文分析 / PAPER ANALYSIS</div>
+            <h1 id="paperTitle"></h1>
+            <p class="paper-subtitle" id="paperSubtitle"></p>
+            <div class="paper-facts" id="paperFacts"></div>
+            <div class="paper-tags" id="paperTags"></div>
+            <div class="paper-actions">
+              <button class="button" id="copyCitation" type="button">复制引用</button>
+              <button class="button" id="printPaper" type="button">打印 / 导出 PDF</button>
+            </div>
+          </header>
+          <aside class="paper-takeaway" id="paperTakeaway" hidden>
+            <div class="eyebrow">核心判断</div>
+            <h2 id="takeawayTitle"></h2>
+            <p id="takeawayDetail"></p>
+          </aside>
+          <nav class="article-toc" id="articleToc" aria-label="文章章节"></nav>
+          <article class="paper-body" id="paperBody" aria-live="polite"></article>
         </section>
         <section id="notesView" aria-labelledby="notesTitle" hidden>
           <div class="notes-head">
@@ -223,6 +308,8 @@
       var sidebarKey = "paper-management-sidebar-v1";
       var app = document.getElementById("app");
       var papers = [];
+      var paperCache = {};
+      var activePaper = null;
       var notes = [];
       var editingId = null;
       var noteForm = document.getElementById("noteForm");
@@ -332,7 +419,7 @@
         return paper && typeof paper.id === "string" && /^[a-z0-9-]+$/.test(paper.id) &&
           typeof paper.title === "string" && paper.title.trim() &&
           typeof paper.file === "string" && paper.file.startsWith("papers/") &&
-          paper.file.endsWith(".html") && !paper.file.split("/").includes("..") &&
+          paper.file.endsWith(".json") && !paper.file.split("/").includes("..") &&
           !paper.file.includes("?") && !paper.file.includes("#");
       }
       async function loadPapers() {
@@ -348,6 +435,70 @@
         renderPapers();
         renderRoute();
       }
+      async function loadPaper(paper) {
+        var body = document.getElementById("paperBody");
+        var toc = document.getElementById("articleToc");
+        body.textContent = "正在加载论文分析…";
+        toc.replaceChildren();
+        document.getElementById("paperTakeaway").hidden = true;
+        try {
+          var data = paperCache[paper.id];
+          if (!data) {
+            var response = await fetch("./" + paper.file, { cache: "no-store" });
+            if (!response.ok) throw new Error("文章不可用");
+            data = await response.json();
+            if (!data || !Array.isArray(data.sections)) throw new Error("文章格式不正确");
+            paperCache[paper.id] = data;
+          }
+          if (activePaper !== paper.id) return;
+          document.getElementById("paperSubtitle").textContent = data.subtitle || "";
+          var facts = document.getElementById("paperFacts");
+          facts.replaceChildren();
+          [data.authors, paper.year, data.journal].filter(Boolean).forEach(function (value) {
+            var span = document.createElement("span");
+            span.textContent = value;
+            facts.appendChild(span);
+          });
+          var tags = document.getElementById("paperTags");
+          tags.replaceChildren();
+          (data.tags || []).forEach(function (value) {
+            var span = document.createElement("span");
+            span.textContent = value;
+            tags.appendChild(span);
+          });
+          document.getElementById("takeawayTitle").textContent = data.takeaway || "";
+          document.getElementById("takeawayDetail").textContent = data.takeawayDetail || "";
+          document.getElementById("paperTakeaway").hidden = !data.takeaway;
+          document.getElementById("copyCitation").onclick = function () {
+            navigator.clipboard.writeText(data.citation || "").then(function () {
+              document.getElementById("copyCitation").textContent = "已复制";
+              setTimeout(function () { document.getElementById("copyCitation").textContent = "复制引用"; }, 1800);
+            });
+          };
+          body.replaceChildren();
+          data.sections.forEach(function (section) {
+            if (!/^[a-z0-9-]+$/.test(section.id) || typeof section.html !== "string") return;
+            var link = document.createElement("a");
+            link.href = "#" + paper.id + "-" + section.id;
+            link.textContent = section.nav || section.id;
+            link.addEventListener("click", function (event) {
+              event.preventDefault();
+              document.getElementById("section-" + section.id).scrollIntoView({ behavior: "smooth" });
+            });
+            toc.appendChild(link);
+            var element = document.createElement("section");
+            element.id = "section-" + section.id;
+            element.innerHTML = section.html;
+            element.querySelectorAll("[data-width]").forEach(function (bar) {
+              var width = Number(bar.dataset.width);
+              if (width >= 0 && width <= 100) bar.style.width = width + "%";
+            });
+            body.appendChild(element);
+          });
+        } catch (error) {
+          if (activePaper === paper.id) body.textContent = "论文分析暂时无法加载，请刷新后重试。";
+        }
+      }
       function renderRoute() {
         var hash = decodeURIComponent(location.hash.slice(1));
         var paper = hash.startsWith("paper/") ? papers.find(function (item) { return item.id === hash.slice(6); }) : null;
@@ -362,10 +513,12 @@
         });
         if (paper) {
           document.getElementById("paperTitle").textContent = paper.title;
-          document.getElementById("paperMeta").textContent = paper.year ? String(paper.year) : "论文分析";
-          var frame = document.getElementById("paperFrame");
-          frame.title = paper.title;
-          if (frame.getAttribute("src") !== paper.file) frame.setAttribute("src", paper.file);
+          if (activePaper !== paper.id) {
+            activePaper = paper.id;
+            loadPaper(paper);
+          }
+        } else {
+          activePaper = null;
         }
         if (window.matchMedia("(max-width: 700px)").matches) setSidebar(true);
       }
@@ -496,6 +649,16 @@
       document.getElementById("scrim").addEventListener("click", function () { setSidebar(true); });
       document.getElementById("homeNav").addEventListener("click", function () { location.hash = "papers"; renderRoute(); });
       document.getElementById("notesNav").addEventListener("click", function () { location.hash = "notes"; renderRoute(); });
+      document.getElementById("printPaper").addEventListener("click", function () { window.print(); });
+      document.getElementById("paperBody").addEventListener("click", function (event) {
+        var button = event.target.closest("[data-copy-review]");
+        if (!button) return;
+        var paragraph = document.getElementById("reviewText");
+        if (paragraph) navigator.clipboard.writeText(paragraph.innerText).then(function () {
+          button.textContent = "已复制";
+          setTimeout(function () { button.textContent = "复制综述段落"; }, 1800);
+        });
+      });
       window.addEventListener("hashchange", renderRoute);
       notes = readNotes();
       dateInput.value = localDate();
