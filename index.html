@@ -3,34 +3,508 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="论文分析与阅读笔记">
-  <title>论文分析 · Paper Management</title>
+  <meta name="description" content="论文管理：浏览论文分析，记录导师讨论笔记。">
+  <title>论文管理</title>
   <style>
-    :root { color-scheme: light; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #f7f8fb; color: #1e293b; }
+    :root {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      color: #253047;
+      background: #f6f7fb;
+      font-synthesis: none;
+    }
     * { box-sizing: border-box; }
     body { margin: 0; }
-    main { max-width: 820px; margin: 0 auto; padding: 72px 24px; }
-    .eyebrow { color: #4f46e5; font-size: 14px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
-    h1 { font-size: clamp(36px, 7vw, 56px); letter-spacing: -.04em; margin: 12px 0 16px; }
-    .intro { color: #475569; font-size: 18px; line-height: 1.7; }
-    section { margin-top: 48px; background: #fff; border: 1px solid #e2e8f0; border-radius: 18px; padding: 28px; }
-    h2 { margin: 0 0 12px; font-size: 22px; }
-    p { line-height: 1.7; }
-    .empty { color: #64748b; margin-bottom: 0; }
-    footer { margin-top: 48px; color: #64748b; font-size: 14px; }
-    a { color: #4338ca; }
+    button, input, textarea { font: inherit; }
+    button { cursor: pointer; }
+    button:focus-visible, input:focus-visible, textarea:focus-visible, a:focus-visible {
+      outline: 3px solid #b5c2ff;
+      outline-offset: 2px;
+    }
+    .app { --sidebar-width: 274px; min-height: 100vh; }
+    .app[data-collapsed="true"] { --sidebar-width: 76px; }
+    .sidebar {
+      position: fixed;
+      z-index: 20;
+      inset: 0 auto 0 0;
+      width: var(--sidebar-width);
+      padding: 22px 14px;
+      background: #fff;
+      border-right: 1px solid #e8ebf2;
+      display: flex;
+      flex-direction: column;
+      transition: width .2s ease;
+      overflow: hidden;
+    }
+    .brand { display: flex; align-items: center; gap: 10px; padding: 2px 4px 26px; white-space: nowrap; }
+    .brand-mark { width: 40px; height: 40px; flex: none; border-radius: 12px; display: grid; place-items: center; color: #fff; background: #4c5bd4; }
+    .brand-name { font-size: 18px; font-weight: 750; letter-spacing: -.02em; }
+    .toggle { margin-left: auto; flex: none; width: 34px; height: 34px; display: grid; place-items: center; border: 0; border-radius: 9px; background: transparent; color: #667085; }
+    .toggle:hover, .nav-button:hover, .paper-link:hover { background: #f1f3fb; }
+    .nav-button, .paper-link {
+      width: 100%;
+      border: 0;
+      background: transparent;
+      color: #526078;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-height: 44px;
+      border-radius: 10px;
+      padding: 0 12px;
+      white-space: nowrap;
+    }
+    .nav-button svg, .paper-link svg { flex: none; }
+    .nav-button.active, .paper-link.active { background: #eef0ff; color: #414fc4; font-weight: 650; }
+    .section-head { display: flex; align-items: center; justify-content: space-between; padding: 30px 12px 10px; color: #98a1b2; font-size: 12px; font-weight: 700; letter-spacing: .1em; }
+    .paper-count { letter-spacing: 0; }
+    .paper-list { overflow: auto; min-height: 0; }
+    .paper-link { min-height: 40px; font-size: 13px; }
+    .paper-title { overflow: hidden; text-overflow: ellipsis; }
+    .sidebar-empty { padding: 6px 12px; color: #a1a9b8; font-size: 13px; line-height: 1.6; }
+    .sidebar-footer { margin-top: auto; padding: 18px 12px 2px; color: #a1a9b8; font-size: 12px; }
+    .app[data-collapsed="true"] .brand-name,
+    .app[data-collapsed="true"] .nav-label,
+    .app[data-collapsed="true"] .section-head,
+    .app[data-collapsed="true"] .paper-list,
+    .app[data-collapsed="true"] .sidebar-footer { display: none; }
+    .app[data-collapsed="true"] .brand { flex-wrap: wrap; justify-content: center; padding-left: 0; padding-right: 0; }
+    .app[data-collapsed="true"] .toggle { margin: 0; }
+    .app[data-collapsed="true"] .nav-button { justify-content: center; padding: 0; }
+    .main { margin-left: var(--sidebar-width); padding: 46px clamp(22px, 5vw, 76px) 72px; transition: margin-left .2s ease; }
+    .content { max-width: 1080px; margin: 0 auto; }
+    .eyebrow { color: #5362d3; font-size: 12px; font-weight: 750; letter-spacing: .14em; }
+    h1 { margin: 12px 0 14px; font-size: clamp(34px, 5vw, 48px); letter-spacing: -.045em; line-height: 1.2; }
+    .lead { margin: 0; color: #6c788d; font-size: 16px; line-height: 1.75; }
+    .card { border: 1px solid #e7eaf1; border-radius: 18px; background: #fff; box-shadow: 0 8px 32px rgba(41, 51, 80, .025); }
+    .hero-card { margin-top: 42px; min-height: 250px; display: grid; place-items: center; padding: 38px; text-align: center; }
+    .empty-icon { width: 54px; height: 54px; border-radius: 16px; display: grid; place-items: center; color: #6472d9; background: #f0f2ff; margin: 0 auto 16px; }
+    h2 { margin: 0 0 9px; font-size: 20px; letter-spacing: -.02em; }
+    .muted { color: #8a95a7; line-height: 1.65; }
+    .notes-head { display: flex; justify-content: space-between; align-items: end; gap: 20px; }
+    .toolbar { display: flex; flex-wrap: wrap; gap: 8px; }
+    .button { border: 1px solid #dfe3ec; border-radius: 10px; background: #fff; color: #39445c; padding: 10px 14px; font-weight: 600; }
+    .button:hover { background: #f7f8fc; }
+    .button.primary { border-color: #4c5bd4; background: #4c5bd4; color: #fff; }
+    .button.primary:hover { background: #414fc4; }
+    .button.danger { color: #bd4251; }
+    .notes-grid { display: grid; grid-template-columns: minmax(280px, 380px) minmax(300px, 1fr); gap: 22px; margin-top: 32px; align-items: start; }
+    .form-card, .list-card { padding: 24px; }
+    .field { margin-top: 18px; }
+    label { display: block; margin-bottom: 7px; font-size: 13px; font-weight: 650; color: #4a576e; }
+    input[type="text"], input[type="date"], textarea { width: 100%; border: 1px solid #dfe3ec; border-radius: 10px; background: #fff; padding: 11px 12px; color: #253047; }
+    textarea { min-height: 190px; resize: vertical; line-height: 1.6; }
+    .form-actions { display: flex; gap: 8px; margin-top: 20px; }
+    .storage-hint { margin: 15px 0 0; color: #8994a6; font-size: 12px; line-height: 1.6; }
+    .list-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .note-count { color: #9aa4b3; font-size: 13px; }
+    .note-list { display: grid; gap: 12px; margin-top: 18px; }
+    .note-card { border: 1px solid #e8ebf2; border-radius: 12px; padding: 16px; }
+    .note-top { display: flex; justify-content: space-between; gap: 12px; }
+    .note-card h3 { margin: 0; font-size: 16px; overflow-wrap: anywhere; }
+    .note-date { color: #9aa4b3; font-size: 12px; white-space: nowrap; }
+    .note-body { margin: 11px 0; white-space: pre-wrap; overflow-wrap: anywhere; color: #58657a; line-height: 1.65; font-size: 14px; }
+    .note-actions { display: flex; gap: 13px; }
+    .text-button { border: 0; background: transparent; padding: 2px 0; color: #4c5bd4; font-size: 13px; font-weight: 650; }
+    .text-button.danger { color: #bd4251; }
+    .paper-frame { display: block; margin-top: 28px; width: 100%; height: calc(100vh - 230px); min-height: 560px; border: 1px solid #e7eaf1; border-radius: 16px; background: #fff; }
+    .status { min-height: 22px; margin: 12px 0 0; color: #5262c6; font-size: 13px; }
+    [hidden] { display: none !important; }
+    .scrim { display: none; }
+    @media (max-width: 900px) { .notes-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 700px) {
+      .app { --sidebar-width: 72px; }
+      .app[data-collapsed="false"] { --sidebar-width: min(280px, 84vw); }
+      .main { margin-left: 72px; padding: 30px 20px 54px; }
+      .app[data-collapsed="false"] .scrim { display: block; position: fixed; z-index: 10; inset: 0; background: rgba(26, 34, 56, .25); border: 0; }
+      .notes-head { align-items: start; flex-direction: column; }
+      .hero-card { margin-top: 28px; }
+    }
   </style>
 </head>
 <body>
-  <main>
-    <div class="eyebrow">Paper Management</div>
-    <h1>论文分析</h1>
-    <p class="intro">这里将收录论文阅读与分析页面，方便公开浏览和分享。</p>
-    <section aria-labelledby="papers-title">
-      <h2 id="papers-title">文章目录</h2>
-      <p class="empty">内容正在整理中。第一篇 HTML 论文分析发布后，将在这里提供入口。</p>
-    </section>
-    <footer>托管于 <a href="https://github.com/xiaoshu12/paper-management">GitHub</a></footer>
-  </main>
+  <div class="app" id="app" data-collapsed="false">
+    <button class="scrim" id="scrim" aria-label="收起论文目录"></button>
+    <aside class="sidebar" aria-label="网站导航">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.5c-2.5-1.8-5.6-2.2-9-1.2v13c3.4-1 6.5-.6 9 1.2 2.5-1.8 5.6-2.2 9-1.2v-13c-3.4-1-6.5-.6-9 1.2Z"/><path d="M12 6.5v13"/></svg>
+        </span>
+        <span class="brand-name">论文管理</span>
+        <button class="toggle" id="toggleSidebar" aria-controls="paperList" aria-expanded="true" aria-label="收起论文目录" title="收起论文目录">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+      </div>
+      <nav aria-label="主要页面">
+        <button class="nav-button" id="homeNav" type="button" title="论文目录">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5h16v13H4zM8 5.5v13M11 9h5M11 13h5"/></svg>
+          <span class="nav-label">论文目录</span>
+        </button>
+        <button class="nav-button" id="notesNav" type="button" title="Notes">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3.5h11l3 3v14H5zM16 3.5v4h3M8 11h8M8 15h8"/></svg>
+          <span class="nav-label">Notes</span>
+        </button>
+      </nav>
+      <div class="section-head"><span>论文</span><span class="paper-count" id="paperCount">0</span></div>
+      <nav class="paper-list" id="paperList" aria-label="论文列表"></nav>
+      <div class="sidebar-footer">Paper Management</div>
+    </aside>
+    <main class="main">
+      <div class="content">
+        <section id="homeView" aria-labelledby="homeTitle">
+          <div class="eyebrow">PAPER LIBRARY</div>
+          <h1 id="homeTitle">论文管理</h1>
+          <p class="lead">把论文分析整理在一起，随时从左侧目录打开阅读。</p>
+          <div class="card hero-card" id="homeEmpty">
+            <div>
+              <span class="empty-icon" aria-hidden="true">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.5c-2.5-1.8-5.6-2.2-9-1.2v13c3.4-1 6.5-.6 9 1.2 2.5-1.8 5.6-2.2 9-1.2v-13c-3.4-1-6.5-.6-9 1.2Z"/><path d="M12 6.5v13"/></svg>
+              </span>
+              <h2>论文目录正在整理</h2>
+              <p class="muted">第一篇 HTML 分析发布后，会显示在左侧目录。</p>
+            </div>
+          </div>
+          <div id="homePapers" hidden></div>
+        </section>
+        <section id="paperView" aria-labelledby="paperTitle" hidden>
+          <div class="eyebrow">PAPER ANALYSIS</div>
+          <h1 id="paperTitle"></h1>
+          <p class="lead" id="paperMeta"></p>
+          <iframe class="paper-frame" id="paperFrame" title="论文分析内容" loading="lazy"></iframe>
+        </section>
+        <section id="notesView" aria-labelledby="notesTitle" hidden>
+          <div class="notes-head">
+            <div>
+              <div class="eyebrow">RESEARCH NOTES</div>
+              <h1 id="notesTitle">Notes</h1>
+              <p class="lead">记录与导师讨论的想法、反馈和下一步计划。</p>
+            </div>
+            <div class="toolbar">
+              <button class="button" id="exportNotes" type="button">导出备份</button>
+              <button class="button" id="importNotes" type="button">导入备份</button>
+              <input id="importFile" type="file" accept="application/json,.json" hidden>
+            </div>
+          </div>
+          <div class="notes-grid">
+            <form class="card form-card" id="noteForm">
+              <h2 id="formTitle">新建讨论记录</h2>
+              <div class="field">
+                <label for="noteTitle">标题</label>
+                <input id="noteTitle" type="text" maxlength="120" placeholder="例如：本周导师讨论" required>
+              </div>
+              <div class="field">
+                <label for="noteDate">讨论日期</label>
+                <input id="noteDate" type="date">
+              </div>
+              <div class="field">
+                <label for="noteContent">讨论内容</label>
+                <textarea id="noteContent" placeholder="记录导师的建议、待确认的问题和下一步行动…" required></textarea>
+              </div>
+              <div class="form-actions">
+                <button class="button primary" type="submit" id="saveNote">保存 Notes</button>
+                <button class="button" type="button" id="cancelEdit" hidden>取消编辑</button>
+              </div>
+              <p class="storage-hint">Notes 仅保存在当前浏览器，不会上传到公开的 GitHub 仓库。清除浏览器数据前，请导出备份。</p>
+              <p class="status" id="noteStatus" role="status"></p>
+            </form>
+            <div class="card list-card">
+              <div class="list-head"><h2>已保存的 Notes</h2><span class="note-count" id="noteCount">0 条</span></div>
+              <div class="note-list" id="noteList"></div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+  <script>
+    (function () {
+      "use strict";
+      var storageKey = "paper-management-notes-v1";
+      var sidebarKey = "paper-management-sidebar-v1";
+      var app = document.getElementById("app");
+      var papers = [];
+      var notes = [];
+      var editingId = null;
+      var noteForm = document.getElementById("noteForm");
+      var titleInput = document.getElementById("noteTitle");
+      var dateInput = document.getElementById("noteDate");
+      var contentInput = document.getElementById("noteContent");
+      var status = document.getElementById("noteStatus");
+
+      function localDate() {
+        var date = new Date();
+        var year = date.getFullYear();
+        var month = String(date.getMonth() + 1).padStart(2, "0");
+        var day = String(date.getDate()).padStart(2, "0");
+        return year + "-" + month + "-" + day;
+      }
+
+      function setStatus(message) { status.textContent = message; }
+      function saveToStorage() {
+        try {
+          localStorage.setItem(storageKey, JSON.stringify(notes));
+          return true;
+        } catch (error) {
+          setStatus("保存失败：当前浏览器无法写入本地存储。请导出备份。");
+          return false;
+        }
+      }
+      function readNotes() {
+        try {
+          var value = JSON.parse(localStorage.getItem(storageKey) || "[]");
+          return Array.isArray(value) ? value.filter(validNote) : [];
+        } catch (error) {
+          setStatus("读取 Notes 失败。请尝试导入备份。");
+          return [];
+        }
+      }
+      function validNote(note) {
+        return note && typeof note.id === "string" && typeof note.title === "string" &&
+          typeof note.content === "string" && typeof note.date === "string";
+      }
+      function setSidebar(collapsed) {
+        app.dataset.collapsed = String(collapsed);
+        var toggle = document.getElementById("toggleSidebar");
+        toggle.setAttribute("aria-expanded", String(!collapsed));
+        toggle.setAttribute("aria-label", collapsed ? "展开论文目录" : "收起论文目录");
+        toggle.title = collapsed ? "展开论文目录" : "收起论文目录";
+        try { localStorage.setItem(sidebarKey, String(collapsed)); } catch (error) { /* Appearance still works. */ }
+      }
+      function makeIcon() {
+        var span = document.createElement("span");
+        span.setAttribute("aria-hidden", "true");
+        span.textContent = "▤";
+        return span;
+      }
+      function makePaperLink(paper) {
+        var button = document.createElement("button");
+        button.type = "button";
+        button.className = "paper-link";
+        button.title = paper.title;
+        button.appendChild(makeIcon());
+        var label = document.createElement("span");
+        label.className = "paper-title";
+        label.textContent = paper.title;
+        button.appendChild(label);
+        button.addEventListener("click", function () { location.hash = "paper/" + encodeURIComponent(paper.id); });
+        return button;
+      }
+      function renderPapers() {
+        var list = document.getElementById("paperList");
+        var home = document.getElementById("homePapers");
+        list.replaceChildren();
+        home.replaceChildren();
+        document.getElementById("paperCount").textContent = String(papers.length);
+        document.getElementById("homeEmpty").hidden = papers.length > 0;
+        home.hidden = papers.length === 0;
+        if (!papers.length) {
+          var empty = document.createElement("p");
+          empty.className = "sidebar-empty";
+          empty.textContent = "暂无论文";
+          list.appendChild(empty);
+          return;
+        }
+        var heading = document.createElement("h2");
+        heading.textContent = "全部论文";
+        home.appendChild(heading);
+        papers.forEach(function (paper) {
+          list.appendChild(makePaperLink(paper));
+          var card = document.createElement("div");
+          card.className = "card";
+          card.style.marginTop = "12px";
+          card.style.padding = "20px";
+          var link = document.createElement("a");
+          link.href = "#paper/" + encodeURIComponent(paper.id);
+          link.textContent = paper.title;
+          link.style.fontWeight = "650";
+          card.appendChild(link);
+          if (paper.year) {
+            var meta = document.createElement("p");
+            meta.className = "muted";
+            meta.style.marginBottom = "0";
+            meta.textContent = String(paper.year);
+            card.appendChild(meta);
+          }
+          home.appendChild(card);
+        });
+      }
+      function validPaper(paper) {
+        return paper && typeof paper.id === "string" && /^[a-z0-9-]+$/.test(paper.id) &&
+          typeof paper.title === "string" && paper.title.trim() &&
+          typeof paper.file === "string" && paper.file.startsWith("papers/") &&
+          paper.file.endsWith(".html") && !paper.file.split("/").includes("..") &&
+          !paper.file.includes("?") && !paper.file.includes("#");
+      }
+      async function loadPapers() {
+        try {
+          var response = await fetch("./papers.json", { cache: "no-store" });
+          if (!response.ok) throw new Error("目录文件不可用");
+          var data = await response.json();
+          papers = Array.isArray(data) ? data.filter(validPaper) : [];
+        } catch (error) {
+          papers = [];
+          document.querySelector("#homeEmpty .muted").textContent = "论文目录暂时无法加载，请稍后刷新页面。";
+        }
+        renderPapers();
+        renderRoute();
+      }
+      function renderRoute() {
+        var hash = decodeURIComponent(location.hash.slice(1));
+        var paper = hash.startsWith("paper/") ? papers.find(function (item) { return item.id === hash.slice(6); }) : null;
+        var view = hash === "notes" ? "notes" : paper ? "paper" : "home";
+        document.getElementById("homeView").hidden = view !== "home";
+        document.getElementById("notesView").hidden = view !== "notes";
+        document.getElementById("paperView").hidden = view !== "paper";
+        document.getElementById("homeNav").classList.toggle("active", view === "home" || view === "paper");
+        document.getElementById("notesNav").classList.toggle("active", view === "notes");
+        document.querySelectorAll(".paper-link").forEach(function (button, index) {
+          button.classList.toggle("active", !!paper && papers[index].id === paper.id);
+        });
+        if (paper) {
+          document.getElementById("paperTitle").textContent = paper.title;
+          document.getElementById("paperMeta").textContent = paper.year ? String(paper.year) : "论文分析";
+          var frame = document.getElementById("paperFrame");
+          frame.title = paper.title;
+          if (frame.getAttribute("src") !== paper.file) frame.setAttribute("src", paper.file);
+        }
+        if (window.matchMedia("(max-width: 700px)").matches) setSidebar(true);
+      }
+      function resetForm() {
+        editingId = null;
+        noteForm.reset();
+        dateInput.value = localDate();
+        document.getElementById("formTitle").textContent = "新建讨论记录";
+        document.getElementById("saveNote").textContent = "保存 Notes";
+        document.getElementById("cancelEdit").hidden = true;
+      }
+      function renderNotes() {
+        var list = document.getElementById("noteList");
+        list.replaceChildren();
+        document.getElementById("noteCount").textContent = notes.length + " 条";
+        if (!notes.length) {
+          var empty = document.createElement("p");
+          empty.className = "muted";
+          empty.textContent = "还没有记录。填写左侧表单后点击“保存 Notes”。";
+          list.appendChild(empty);
+          return;
+        }
+        notes.slice().sort(function (a, b) { return (b.updatedAt || "").localeCompare(a.updatedAt || ""); }).forEach(function (note) {
+          var card = document.createElement("article");
+          card.className = "note-card";
+          var top = document.createElement("div");
+          top.className = "note-top";
+          var title = document.createElement("h3");
+          title.textContent = note.title;
+          var date = document.createElement("span");
+          date.className = "note-date";
+          date.textContent = note.date;
+          top.append(title, date);
+          var body = document.createElement("p");
+          body.className = "note-body";
+          body.textContent = note.content;
+          var actions = document.createElement("div");
+          actions.className = "note-actions";
+          var edit = document.createElement("button");
+          edit.type = "button";
+          edit.className = "text-button";
+          edit.textContent = "编辑";
+          edit.addEventListener("click", function () {
+            editingId = note.id;
+            titleInput.value = note.title;
+            dateInput.value = note.date;
+            contentInput.value = note.content;
+            document.getElementById("formTitle").textContent = "编辑讨论记录";
+            document.getElementById("saveNote").textContent = "保存修改";
+            document.getElementById("cancelEdit").hidden = false;
+            setStatus("");
+            titleInput.focus();
+          });
+          var remove = document.createElement("button");
+          remove.type = "button";
+          remove.className = "text-button danger";
+          remove.textContent = "删除";
+          remove.addEventListener("click", function () {
+            if (!confirm("确定删除这条 Notes？删除后无法恢复。")) return;
+            var next = notes.filter(function (item) { return item.id !== note.id; });
+            var previous = notes;
+            notes = next;
+            if (!saveToStorage()) { notes = previous; return; }
+            if (editingId === note.id) resetForm();
+            renderNotes();
+            setStatus("已删除。");
+          });
+          actions.append(edit, remove);
+          card.append(top, body, actions);
+          list.appendChild(card);
+        });
+      }
+      noteForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+        var title = titleInput.value.trim();
+        var content = contentInput.value.trim();
+        if (!title || !content) { setStatus("请填写标题和讨论内容。"); return; }
+        var now = new Date().toISOString();
+        var next = notes.slice();
+        if (editingId) {
+          next = next.map(function (note) {
+            return note.id === editingId ? { id: note.id, title: title, date: dateInput.value || localDate(), content: content, updatedAt: now } : note;
+          });
+        } else {
+          next.push({ id: window.crypto && crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random(), title: title, date: dateInput.value || localDate(), content: content, updatedAt: now });
+        }
+        var previous = notes;
+        notes = next;
+        if (!saveToStorage()) { notes = previous; return; }
+        renderNotes();
+        resetForm();
+        setStatus("已保存在当前浏览器。");
+      });
+      document.getElementById("cancelEdit").addEventListener("click", function () { resetForm(); setStatus(""); });
+      document.getElementById("exportNotes").addEventListener("click", function () {
+        var blob = new Blob([JSON.stringify(notes, null, 2)], { type: "application/json" });
+        var url = URL.createObjectURL(blob);
+        var link = document.createElement("a");
+        link.href = url;
+        link.download = "paper-management-notes-" + localDate() + ".json";
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+        setStatus("备份文件已下载。");
+      });
+      document.getElementById("importNotes").addEventListener("click", function () { document.getElementById("importFile").click(); });
+      document.getElementById("importFile").addEventListener("change", async function (event) {
+        var file = event.target.files && event.target.files[0];
+        if (!file) return;
+        try {
+          var data = JSON.parse(await file.text());
+          if (!Array.isArray(data) || !data.every(validNote)) throw new Error("文件格式不正确");
+          var byId = new Map(notes.map(function (note) { return [note.id, note]; }));
+          data.forEach(function (note) { byId.set(note.id, note); });
+          var previous = notes;
+          notes = Array.from(byId.values());
+          if (!saveToStorage()) { notes = previous; return; }
+          renderNotes();
+          setStatus("已导入 " + data.length + " 条 Notes；同 ID 记录已更新。");
+        } catch (error) {
+          setStatus("导入失败：请选择本站导出的 JSON 备份文件。");
+        } finally {
+          event.target.value = "";
+        }
+      });
+      document.getElementById("toggleSidebar").addEventListener("click", function () { setSidebar(app.dataset.collapsed !== "true"); });
+      document.getElementById("scrim").addEventListener("click", function () { setSidebar(true); });
+      document.getElementById("homeNav").addEventListener("click", function () { location.hash = "papers"; renderRoute(); });
+      document.getElementById("notesNav").addEventListener("click", function () { location.hash = "notes"; renderRoute(); });
+      window.addEventListener("hashchange", renderRoute);
+      notes = readNotes();
+      dateInput.value = localDate();
+      renderNotes();
+      try { setSidebar(localStorage.getItem(sidebarKey) === "true" || (localStorage.getItem(sidebarKey) === null && window.matchMedia("(max-width: 700px)").matches)); }
+      catch (error) { setSidebar(window.matchMedia("(max-width: 700px)").matches); }
+      loadPapers();
+      renderRoute();
+    }());
+  </script>
 </body>
 </html>
