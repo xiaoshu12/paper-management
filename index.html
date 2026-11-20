@@ -191,6 +191,16 @@
       .paper-body .chat-line { grid-template-columns: 1fr; gap: 2px; }
       .paper-takeaway { padding: 20px; }
     }
+    @media print {
+      :root { background: #fff; color: #111827; }
+      .sidebar, .scrim, .paper-actions, .article-toc { display: none !important; }
+      .main { margin: 0; padding: 0; }
+      .content, .paper-body { max-width: none; }
+      .paper-header, .paper-body section { break-inside: avoid-page; }
+      .paper-body .grid-2, .paper-body .grid-3 { break-inside: avoid-page; }
+      .paper-body .table-wrap { overflow: visible; }
+      .paper-body table { min-width: 0; }
+    }
   </style>
 </head>
 <body>
